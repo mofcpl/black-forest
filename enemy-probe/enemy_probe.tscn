@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dwlkcbt6xwcpi"]
+
+[ext_resource type="Script" uid="uid://cy0p4wc0h217r" path="res://enemy-probe/enemy_probe.gd" id="1_wr4hj"]
+
+[node name="EnemyProbe" type="Node2D" unique_id=1863429994]
+script = ExtResource("1_wr4hj")

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dn666c3e0gasu"]
+
+[ext_resource type="PackedScene" uid="uid://c2qdljngqqslo" path="res://base-planet-system/base_planet_system.tscn" id="1_q5a5l"]
+[ext_resource type="Texture2D" uid="uid://48ul7tkvuofc" path="res://planet-system/planet-system.png" id="1_s2l8h"]
+[ext_resource type="Script" uid="uid://cwysc2jb54tux" path="res://planet-system/planet_system.gd" id="2_cou2y"]
+
+[node name="PlanetSystem" unique_id=417918032 instance=ExtResource("1_q5a5l")]
+script = ExtResource("2_cou2y")
+
+[node name="Picture" type="Sprite2D" parent="." index="4" unique_id=1560681321]
+texture = ExtResource("1_s2l8h")

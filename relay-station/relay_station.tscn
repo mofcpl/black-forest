@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cjr20d4ia04wh"]
+
+[ext_resource type="Script" uid="uid://c4lv540v4w33a" path="res://relay-station/relay_station.gd" id="1_sw4vy"]
+
+[node name="RelayStation" type="Node" unique_id=1452526992]
+script = ExtResource("1_sw4vy")

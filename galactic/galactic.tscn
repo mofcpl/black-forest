@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://47w62anpd2d2"]
+
+[ext_resource type="Script" uid="uid://b3h672p0oqkuw" path="res://galactic/galactic.gd" id="1_uudf4"]
+
+[node name="Galactic" type="Node2D" unique_id=2133721166]
+script = ExtResource("1_uudf4")

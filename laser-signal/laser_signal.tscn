@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cronndsjo2j5b"]
+
+[ext_resource type="Script" uid="uid://cruawmr5rl1mm" path="res://laser-signal/laser_signal.gd" id="1_jb8kw"]
+
+[node name="LaserSignal" type="Node2D" unique_id=1286457923]
+script = ExtResource("1_jb8kw")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=624964931]

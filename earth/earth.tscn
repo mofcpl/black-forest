@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bq718je0m00dl"]
+
+[ext_resource type="PackedScene" uid="uid://c2qdljngqqslo" path="res://base-planet-system/base_planet_system.tscn" id="1_0dmmc"]
+[ext_resource type="Script" uid="uid://bls1mbvocto3p" path="res://earth/earth.gd" id="2_v2trk"]
+[ext_resource type="Texture2D" uid="uid://dno52w0vqa8gi" path="res://earth/earth.png" id="3_v2trk"]
+
+[node name="Earth" unique_id=417918032 instance=ExtResource("1_0dmmc")]
+script = ExtResource("2_v2trk")
+
+[node name="Picture" type="Sprite2D" parent="." index="4" unique_id=513766520]
+texture = ExtResource("3_v2trk")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dweg5ryip3u7b"]
+
+[ext_resource type="Script" uid="uid://4jlo3ygs5qve" path="res://game/game.gd" id="1_h7iqs"]
+[ext_resource type="PackedScene" uid="uid://47w62anpd2d2" path="res://galactic/galactic.tscn" id="1_l1rk1"]
+[ext_resource type="PackedScene" uid="uid://b7g60yia76t6x" path="res://UI/ui.tscn" id="3_4fuuu"]
+
+[node name="Game" type="Node" unique_id=1184323287]
+script = ExtResource("1_h7iqs")
+
+[node name="Galactic" parent="." unique_id=1427034799 instance=ExtResource("1_l1rk1")]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1312248574]
+
+[node name="UI" parent="." unique_id=357798709 instance=ExtResource("3_4fuuu")]
