@@ -6,10 +6,10 @@ extends Node
 @export var mouse_pan_margin: float = 20.0
 
 var discovered_habitable_systems: int = 0
+var selected_planet_system: BasePlanetSystem = null
 
 func _ready() -> void:
 	set_process(true)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -42,3 +42,8 @@ func _process(delta: float) -> void:
 	if dir != Vector2.ZERO:
 		dir = dir.normalized()
 		camera.global_position += dir * pan_speed * delta
+
+func _on_galactic_planet_system_selected(system: BasePlanetSystem) -> void:
+	if selected_planet_system != null:
+		selected_planet_system.set_selected(false)
+	selected_planet_system = system

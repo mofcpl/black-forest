@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c2qdljngqqslo"]
 
 [ext_resource type="Script" uid="uid://ch2vf36yxab8s" path="res://base-planet-system/base_planet_system.gd" id="1_8viq8"]
+[ext_resource type="Texture2D" uid="uid://drooau07mgwu" path="res://base-planet-system/select.png" id="2_wh080"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8viq8"]
 radius = 14.0
@@ -9,6 +10,8 @@ radius = 14.0
 script = ExtResource("1_8viq8")
 
 [node name="Selection" type="Sprite2D" parent="." unique_id=1647495248]
+visible = false
+texture = ExtResource("2_wh080")
 
 [node name="PlanetSystemName" type="Label" parent="." unique_id=547028031]
 offset_left = -19.0
@@ -26,3 +29,7 @@ offset_bottom = 12.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=165747890]
 shape = SubResource("CircleShape2D_8viq8")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

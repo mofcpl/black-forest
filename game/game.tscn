@@ -7,8 +7,14 @@
 [node name="Game" type="Node" unique_id=1184323287]
 script = ExtResource("1_h7iqs")
 
+[node name="UI" parent="." unique_id=357798709 instance=ExtResource("3_4fuuu")]
+offset_left = -9.0
+offset_top = 44.0
+offset_right = -9.0
+offset_bottom = 44.0
+
 [node name="Galactic" parent="." unique_id=1427034799 instance=ExtResource("1_l1rk1")]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1312248574]
 
-[node name="UI" parent="." unique_id=357798709 instance=ExtResource("3_4fuuu")]
+[connection signal="planet_system_selected" from="Galactic" to="." method="_on_galactic_planet_system_selected"]

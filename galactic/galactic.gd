@@ -1,5 +1,7 @@
 extends Node
 
+signal planet_system_selected(system: BasePlanetSystem)
+
 var BasePlanetSystemScene = preload("res://base-planet-system/base_planet_system.tscn")
 var PlanetScene = preload("res://planet-system/planet_system.tscn")
 var RelayStationScene = preload("res://relay-station/relay_station.tscn")
@@ -13,16 +15,18 @@ var signals: Array[BaseSignal] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	generate_planet_systems(Vector2(250, 250), 10, 50)
+	generate_enemy_probes(Vector2(5000, 5000), 2, 1000)
+	_generate_earth()
+
+func _generate_earth() -> void:
 	var earth: Earth = EarthScene.instantiate() as Earth
 	earth.initialize("Earth")
 	var relay_station: RelayStation = RelayStationScene.instantiate() as RelayStation
 	relay_station.set_id("Communication center")
 	earth.set_station(relay_station)
 	add_child(earth)
-	
-	generate_planet_systems(Vector2(250, 250), 10, 50)
-	generate_enemy_probes(Vector2(5000, 5000), 2, 1000)
-
+	earth.connect("clicked", _on_planet_system_select)
 
 func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding: float) -> void:
 	# Calculate the bounds based on multiplier
@@ -67,7 +71,8 @@ func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding
 				relay_stations.append(relay_station)
 			
 			planet_systems.append(planet_system)
-			add_child(planet_system)  # _ready() wywoła się tutaj, gdy wszystkie dane są już ustawione
+			add_child(planet_system)
+			planet_system.connect("clicked", _on_planet_system_select)
 
 
 func generate_enemy_probes(chunk_size: Vector2, chunk_multiplier: int, padding: float) -> void:
@@ -106,6 +111,8 @@ func generate_enemy_probes(chunk_size: Vector2, chunk_multiplier: int, padding: 
 			enemy_probes.append(enemy_probe)
 			add_child(enemy_probe)
 
+func _on_planet_system_select(system: BasePlanetSystem) -> void: 
+	planet_system_selected.emit(system)
 
 func _generate_random_id(length: int) -> String:
 	var rng := RandomNumberGenerator.new()
