@@ -7,5 +7,9 @@
 [node name="PlanetSystem" unique_id=417918032 instance=ExtResource("1_q5a5l")]
 script = ExtResource("2_cou2y")
 
+[node name="RelayStationName" parent="." index="2" unique_id=1580799622]
+visible = false
+
 [node name="Picture" type="Sprite2D" parent="." index="4" unique_id=1560681321]
+visible = false
 texture = ExtResource("1_s2l8h")

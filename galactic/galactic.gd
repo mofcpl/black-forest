@@ -3,6 +3,7 @@ class_name Galactic
 extends Node
 
 signal planet_system_selected(system: BasePlanetSystem)
+signal score()
 
 var BasePlanetSystemScene = preload("res://base-planet-system/base_planet_system.tscn")
 var PlanetScene = preload("res://planet-system/planet_system.tscn")
@@ -10,6 +11,7 @@ var RelayStationScene = preload("res://relay-station/relay_station.tscn")
 var EnemyProbeScene = preload("res://enemy-probe/enemy_probe.tscn")
 var EarthScene = preload("res://earth/earth.tscn")
 var RadioSignalScene = preload("res://radio-signal/radio_signal.tscn")
+var LaserSignalScene = preload("res://laser-signal/laser_signal.tscn")
 
 var planet_systems: Array[PlanetSystem] = []
 var relay_stations: Array[RelayStation] = []
@@ -25,18 +27,32 @@ func _ready() -> void:
 func _generate_earth() -> void:
 	var earth: Earth = EarthScene.instantiate() as Earth
 	earth.initialize("Earth")
+	earth.discovered = true
 	var relay_station: RelayStation = RelayStationScene.instantiate() as RelayStation
 	relay_station.set_id("Communication center")
-	earth.set_station(relay_station)
+	#earth.set_station(relay_station)
 	add_child(earth)
 	earth.connect("clicked", _on_planet_system_select)
+
+func create_laser_signal(data: PlanetSystem, target: BasePlanetSystem, target_relative_position: Vector2) -> void:
+	var laser_signal: LaserSignal = LaserSignalScene.instantiate() as LaserSignal
+	laser_signal.initialize(data, target, target_relative_position, data.discovered)
+	laser_signal.position = data.position
+	add_child(laser_signal)
+	laser_signal.connect("signal_reached_target", on_laser_signal_received)
+
+func on_laser_signal_received(target: BasePlanetSystem, data: PlanetSystem) -> void:
+	if target is Earth:
+		data.discover()
+		if data.habitable:
+			score.emit()
 
 func create_radio_signal(source: BasePlanetSystem) -> void:
 	var receivers: Array[BasePlanetSystem] = []
 	var distances: Array[float] = []
 	
 	for system in planet_systems:
-		if system != source:
+		if system != source and system != Earth:
 			var distance: float = source.position.distance_to(system.position)
 			if distance <= Constants.SIGNAL_RANGE:
 				receivers.append(system)
@@ -44,8 +60,12 @@ func create_radio_signal(source: BasePlanetSystem) -> void:
 	
 	if receivers.size() > 0:
 		var radio_signal: RadioSignal = RadioSignalScene.instantiate() as RadioSignal
-		radio_signal.initialize(receivers, distances)
+		radio_signal.initialize(source, receivers, distances)
 		add_child(radio_signal)
+		radio_signal.connect("signal_reached_target",on_radio_signal_received)
+
+func on_radio_signal_received(emiter: BasePlanetSystem, target: BasePlanetSystem) -> void:
+	create_laser_signal(target, emiter, emiter.position - target.position)
 
 func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding: float) -> void:
 	# Calculate the bounds based on multiplier
@@ -80,14 +100,15 @@ func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding
 			var planet_system: PlanetSystem = PlanetScene.instantiate() as PlanetSystem
 			planet_system.position = random_pos
 			planet_system.initialize(_generate_random_id(5), randf() < 0.5)
+			planet_system.habitable = randf() < 0.1  # 10% szans na habitowalny
 			
 			# 50% chance to create RelayStation
-			if randf() < 0.5:
-				var relay_station: RelayStation = RelayStationScene.instantiate() as RelayStation
-				relay_station.set_id(_generate_random_id(3))
-				planet_system.set_station(relay_station)
-				planet_system.add_child(relay_station)
-				relay_stations.append(relay_station)
+			# if randf() < 0.5:
+			# 	var relay_station: RelayStation = RelayStationScene.instantiate() as RelayStation
+			# 	relay_station.set_id(_generate_random_id(3))
+			# 	planet_system.set_station(relay_station)
+			# 	planet_system.add_child(relay_station)
+			# 	relay_stations.append(relay_station)
 			
 			planet_systems.append(planet_system)
 			add_child(planet_system)

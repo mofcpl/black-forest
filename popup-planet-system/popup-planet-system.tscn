@@ -42,6 +42,7 @@ theme_override_font_sizes/font_size = 30
 text = "System name"
 
 [node name="StationName" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1702471833]
+visible = false
 layout_mode = 2
 text = "Relay name"
 

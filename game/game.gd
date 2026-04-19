@@ -36,17 +36,17 @@ func _process(delta: float) -> void:
 		dir.y += 1
 
 	# Mouse edge panning
-	var vp := get_viewport()
-	var mouse_pos := vp.get_mouse_position()
-	var view_size: Vector2 = vp.get_visible_rect().size
-	if mouse_pos.x <= mouse_pan_margin:
-		dir.x -= 1
-	elif mouse_pos.x >= view_size.x - mouse_pan_margin:
-		dir.x += 1
-	if mouse_pos.y <= mouse_pan_margin:
-		dir.y -= 1
-	elif mouse_pos.y >= view_size.y - mouse_pan_margin:
-		dir.y += 1
+	# var vp := get_viewport()
+	# var mouse_pos := vp.get_mouse_position()
+	# var view_size: Vector2 = vp.get_visible_rect().size
+	# if mouse_pos.x <= mouse_pan_margin:
+	# 	dir.x -= 1
+	# elif mouse_pos.x >= view_size.x - mouse_pan_margin:
+	# 	dir.x += 1
+	# if mouse_pos.y <= mouse_pan_margin:
+	# 	dir.y -= 1
+	# elif mouse_pos.y >= view_size.y - mouse_pan_margin:
+	# 	dir.y += 1
 
 	# Apply movement
 	if dir != Vector2.ZERO: 
@@ -75,3 +75,8 @@ func _on_user_interface_close() -> void:
 
 func _on_user_interface_ping_earth() -> void:
 	galactic.create_radio_signal(selected_planet_system)
+
+
+func _on_galactic_score() -> void:
+	discovered_habitable_systems += 1
+	user_interface.update_score(discovered_habitable_systems)

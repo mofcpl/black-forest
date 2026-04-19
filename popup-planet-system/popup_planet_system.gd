@@ -8,7 +8,7 @@ signal target(system: BasePlanetSystem)
 signal close()
 
 @onready var planet_system_name_label: Label = $Panel/MarginContainer/HBoxContainer/VBoxContainer/PlanetSystemName
-@onready var relay_system_name_label: Label = $Panel/MarginContainer/HBoxContainer/VBoxContainer/StationName
+#@onready var relay_system_name_label: Label = $Panel/MarginContainer/HBoxContainer/VBoxContainer/StationName
 @onready var target_menu: OptionButton = $Panel/MarginContainer/HBoxContainer/VBoxContainer2/OptionButton
 
 var systems_in_range: Array[BasePlanetSystem] = []
@@ -16,7 +16,7 @@ var planet_system: BasePlanetSystem = null
 
 func _ready() -> void:
 	planet_system_name_label.text = planet_system.id
-	relay_system_name_label.text = planet_system.station.id
+	#relay_system_name_label.text = planet_system.station.id
 
 func initialize(planet_system: BasePlanetSystem) -> void:
 	self.planet_system = planet_system

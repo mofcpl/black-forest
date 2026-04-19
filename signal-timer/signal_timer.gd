@@ -17,3 +17,4 @@ func initialize(distance_to_target: float) -> void:
 
 func _on_timer_timeout() -> void:
 	signal_reached_target.emit()
+	queue_free()

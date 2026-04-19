@@ -4,12 +4,11 @@ extends Node2D
 
 var SignalTimerScene = preload("res://signal-timer/signal_timer.tscn")
 
-@onready var circle_timer: Timer = $CircleTimer
-
-signal signal_reached_target(target: BasePlanetSystem)
+signal signal_reached_target(emiter: BasePlanetSystem, target: BasePlanetSystem)
 
 #Tu jeszcze musi być EnemyProbe
 var receivers: Array[BasePlanetSystem] = []
+var emiter: BasePlanetSystem = null
 var distances: Array[float] = []
 var radius = 0.0
 var state = Enums.State.EXPANDING
@@ -19,7 +18,7 @@ func _ready() -> void:
 		var signal_timer: SignalTimer = SignalTimerScene.instantiate() as SignalTimer
 		signal_timer.initialize(distances[i])
 		add_child(signal_timer)
-		signal_timer.signal_reached_target.connect(_on_signal_reached_target)
+		signal_timer.signal_reached_target.connect(_on_signal_reached_target.bind(receivers[i]))
 
 func _process(delta):
 	match state:
@@ -36,9 +35,10 @@ func _process(delta):
 	queue_redraw()
 
 func _on_signal_reached_target(target: BasePlanetSystem) -> void:
-	signal_reached_target.emit(target)
+	signal_reached_target.emit(self.emiter, target)
 
-func initialize(receivers: Array[BasePlanetSystem], distances: Array[float]) -> void:
+func initialize(emiter: BasePlanetSystem, receivers: Array[BasePlanetSystem], distances: Array[float]) -> void:
+	self.emiter = emiter
 	self.receivers = receivers
 	self.distances = distances
 	
