@@ -4,10 +4,10 @@ extends Node2D
 
 var SignalTimerScene = preload("res://signal-timer/signal_timer.tscn")
 
-signal signal_reached_target(emiter: BasePlanetSystem, target: BasePlanetSystem)
+signal signal_reached_target(emiter: BasePlanetSystem, target: PlanetSystem)
 
 #Tu jeszcze musi być EnemyProbe
-var receivers: Array[BasePlanetSystem] = []
+var receivers: Array[PlanetSystem] = []
 var emiter: BasePlanetSystem = null
 var distances: Array[float] = []
 var radius = 0.0
@@ -34,10 +34,10 @@ func _process(delta):
 				queue_free()  # sygnał zakończony
 	queue_redraw()
 
-func _on_signal_reached_target(target: BasePlanetSystem) -> void:
+func _on_signal_reached_target(target: PlanetSystem) -> void:
 	signal_reached_target.emit(self.emiter, target)
 
-func initialize(emiter: BasePlanetSystem, receivers: Array[BasePlanetSystem], distances: Array[float]) -> void:
+func initialize(emiter: BasePlanetSystem, receivers: Array[PlanetSystem], distances: Array[float]) -> void:
 	self.emiter = emiter
 	self.receivers = receivers
 	self.distances = distances

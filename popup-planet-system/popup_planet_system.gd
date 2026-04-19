@@ -2,7 +2,7 @@ class_name PopupPlanetSystem
 
 extends Control
 
-signal ping()
+signal ping(system: PlanetSystem)
 signal enabled(is_enabled: bool)
 signal target(system: BasePlanetSystem)
 signal close()
@@ -22,7 +22,7 @@ func initialize(planet_system: BasePlanetSystem) -> void:
 	self.planet_system = planet_system
 
 func _on_ping_pressed() -> void:
-	ping.emit()
+	ping.emit(planet_system)
 
 func _on_close_pressed() -> void:
 	close.emit()

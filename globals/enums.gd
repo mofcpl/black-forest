@@ -4,3 +4,9 @@ enum State {
 	EXPANDING,
 	RETURNING
 }
+
+enum LaserSignalType {
+	COMMAND,
+	PING,
+	RAPORT
+}

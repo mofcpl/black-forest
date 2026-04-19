@@ -22,4 +22,5 @@ autostart = true
 [connection signal="score" from="Galactic" to="." method="_on_galactic_score"]
 [connection signal="close" from="UserInterface" to="." method="_on_user_interface_close"]
 [connection signal="ping_earth" from="UserInterface" to="." method="_on_user_interface_ping_earth"]
+[connection signal="ping_planet_system" from="UserInterface" to="." method="_on_user_interface_ping_planet_system"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

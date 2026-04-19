@@ -72,11 +72,12 @@ func _on_user_interface_close() -> void:
 		selected_planet_system.set_selected(false)
 		selected_planet_system = null
 
-
 func _on_user_interface_ping_earth() -> void:
 	galactic.create_radio_signal(selected_planet_system)
 
-
 func _on_galactic_score() -> void:
 	discovered_habitable_systems += 1
-	user_interface.update_score(discovered_habitable_systems)
+	user_interface.update_points(discovered_habitable_systems)
+
+func _on_user_interface_ping_planet_system(system: PlanetSystem) -> void:
+	galactic.create_laser_signal(Enums.LaserSignalType.COMMAND, null, system, null)

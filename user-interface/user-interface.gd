@@ -3,6 +3,7 @@ class_name UserInterface
 extends CanvasLayer
 
 signal ping_earth()
+signal ping_planet_system(system: PlanetSystem)
 signal close()
 
 var PopupEarthScene = preload("res://popup-earth/popup-earth.tscn")
@@ -40,6 +41,7 @@ func open_popup_planet_system(system: BasePlanetSystem) -> void:
 	popup.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	current_popup = popup
 	popup.close.connect(close_popup)
+	popup.ping.connect(on_ping_planet_system)
 	popup_opened = true
 	
 func close_popup() -> void:
@@ -49,5 +51,9 @@ func close_popup() -> void:
 		close.emit()
 	popup_opened = false
 
+func on_ping_planet_system(system: PlanetSystem) -> void:
+	ping_planet_system.emit(system)
+
 func on_ping_earth() -> void:
 	emit_signal("ping_earth")
+	close_popup()
