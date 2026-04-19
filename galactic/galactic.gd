@@ -1,3 +1,5 @@
+class_name Galactic
+
 extends Node
 
 signal planet_system_selected(system: BasePlanetSystem)
@@ -7,6 +9,7 @@ var PlanetScene = preload("res://planet-system/planet_system.tscn")
 var RelayStationScene = preload("res://relay-station/relay_station.tscn")
 var EnemyProbeScene = preload("res://enemy-probe/enemy_probe.tscn")
 var EarthScene = preload("res://earth/earth.tscn")
+var RadioSignalScene = preload("res://radio-signal/radio_signal.tscn")
 
 var planet_systems: Array[PlanetSystem] = []
 var relay_stations: Array[RelayStation] = []
@@ -27,6 +30,22 @@ func _generate_earth() -> void:
 	earth.set_station(relay_station)
 	add_child(earth)
 	earth.connect("clicked", _on_planet_system_select)
+
+func create_radio_signal(source: BasePlanetSystem) -> void:
+	var receivers: Array[BasePlanetSystem] = []
+	var distances: Array[float] = []
+	
+	for system in planet_systems:
+		if system != source:
+			var distance: float = source.position.distance_to(system.position)
+			if distance <= Constants.SIGNAL_RANGE:
+				receivers.append(system)
+				distances.append(distance)
+	
+	if receivers.size() > 0:
+		var radio_signal: RadioSignal = RadioSignalScene.instantiate() as RadioSignal
+		radio_signal.initialize(receivers, distances)
+		add_child(radio_signal)
 
 func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding: float) -> void:
 	# Calculate the bounds based on multiplier

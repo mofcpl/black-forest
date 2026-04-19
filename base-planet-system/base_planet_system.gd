@@ -37,8 +37,9 @@ func _on_area_2d_mouse_exited() -> void:
 		selection.visible = false
 		selection.modulate.a = 1
 
-func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		selection.modulate.a = 1
-		set_selected(true)
-		emit_signal("clicked", self)
+		if station:
+			selection.modulate.a = 1
+			set_selected(true)
+			emit_signal("clicked", self)

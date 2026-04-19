@@ -6,6 +6,8 @@
 
 [node name="Game" type="Node" unique_id=1184323287]
 script = ExtResource("1_h7iqs")
+pan_speed = null
+mouse_pan_margin = null
 
 [node name="Galactic" parent="." unique_id=1427034799 instance=ExtResource("1_l1rk1")]
 
@@ -20,4 +22,5 @@ autostart = true
 
 [connection signal="planet_system_selected" from="Galactic" to="." method="_on_galactic_planet_system_selected"]
 [connection signal="close" from="UserInterface" to="." method="_on_user_interface_close"]
+[connection signal="ping_earth" from="UserInterface" to="." method="_on_user_interface_ping_earth"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

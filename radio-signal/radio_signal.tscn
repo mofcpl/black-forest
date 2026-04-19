@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bc620hymak8sa"]
+
+[ext_resource type="Script" uid="uid://dgfnsxsog0krj" path="res://radio-signal/radio_signal.gd" id="1_boj3l"]
+
+[node name="RadioSignal" type="Node2D" unique_id=1962813996]
+script = ExtResource("1_boj3l")

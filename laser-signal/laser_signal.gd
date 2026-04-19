@@ -1,9 +1,14 @@
 extends RelayStation
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@onready var laser: Line2D = $Line2D
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+var data: Array[BasePlanetSystem] = []
+var target: BasePlanetSystem = null
+var target_relative_position: Vector2 = Vector2.ZERO
+
+
+
+func initialize(data: Array[BasePlanetSystem], target: BasePlanetSystem) -> void:
+	self.data = data
+	self.target = target
+	target_relative_position = target.position - self.position

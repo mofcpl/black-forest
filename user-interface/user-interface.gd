@@ -32,9 +32,15 @@ func open_popup_earth(earth: Earth) -> void:
 	popup.close.connect(close_popup)
 	popup_opened = true
 
-func open_popup_planet_system(system: BasePlanetSystem, systems_in_range: Array[BasePlanetSystem]) -> void:
+func open_popup_planet_system(system: BasePlanetSystem) -> void:
 	var popup: PopupPlanetSystem = PopupPlanetSystemScene.instantiate() as PopupPlanetSystem
-	#popup.initialize(system, systems_in_range)
+	popup.initialize(system)
+	container.add_child(popup)
+	popup.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	popup.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	current_popup = popup
+	popup.close.connect(close_popup)
+	popup_opened = true
 	
 func close_popup() -> void:
 	if current_popup != null:

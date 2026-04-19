@@ -3,6 +3,7 @@ extends Node
 @onready var camera: Camera2D = $Camera2D
 @onready var years_past_timer: Timer = $Timer
 @onready var user_interface: UserInterface = $UserInterface
+@onready var galactic: Galactic = $Galactic
 
 @export var pan_speed: float = 600.0
 @export var mouse_pan_margin: float = 20.0
@@ -60,6 +61,8 @@ func _on_galactic_planet_system_selected(system: BasePlanetSystem) -> void:
 		selected_planet_system.set_selected(true)
 		if system is Earth:
 			user_interface.open_popup_earth(system)
+		else:
+			user_interface.open_popup_planet_system(system)
 
 func _on_timer_timeout() -> void:
 	updateTime()
@@ -68,3 +71,7 @@ func _on_user_interface_close() -> void:
 	if selected_planet_system != null:
 		selected_planet_system.set_selected(false)
 		selected_planet_system = null
+
+
+func _on_user_interface_ping_earth() -> void:
+	galactic.create_radio_signal(selected_planet_system)

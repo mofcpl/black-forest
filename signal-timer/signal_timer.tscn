@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ce7ebt1idapfx"]
+
+[ext_resource type="Script" uid="uid://c7tnqijmovwbr" path="res://signal-timer/signal_timer.gd" id="1_wq05q"]
+
+[node name="SignalTimer" type="Node2D" unique_id=414830268]
+script = ExtResource("1_wq05q")
+
+[node name="Timer" type="Timer" parent="." unique_id=1750927106]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
