@@ -1,6 +1,17 @@
 [gd_scene format=3 uid="uid://dwlkcbt6xwcpi"]
 
 [ext_resource type="Script" uid="uid://cy0p4wc0h217r" path="res://enemy-probe/enemy_probe.gd" id="1_wr4hj"]
+[ext_resource type="Texture2D" uid="uid://c60eufl6adjop" path="res://enemy-probe/enemy.png" id="2_rydtg"]
 
 [node name="EnemyProbe" type="Node2D" unique_id=1863429994]
 script = ExtResource("1_wr4hj")
+
+[node name="Picture" type="Sprite2D" parent="." unique_id=1891602257]
+texture = ExtResource("2_rydtg")
+
+[node name="Label" type="Label" parent="." unique_id=1716368621]
+offset_left = -51.0
+offset_top = 5.0
+offset_right = 52.0
+offset_bottom = 28.0
+text = "Enemy probe"

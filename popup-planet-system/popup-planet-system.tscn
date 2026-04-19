@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://deg0uiwfnnft4"]
+
+[ext_resource type="Theme" uid="uid://ir73xvl6gyso" path="res://public/new_theme.tres" id="1_rxxiy"]
+[ext_resource type="Script" uid="uid://ojbwihye11fv" path="res://popup-planet-system/popup_planet_system.gd" id="2_gp3mg"]
+
+[node name="PopupPlanetSystem" type="Control" unique_id=1321280207]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_rxxiy")
+script = ExtResource("2_gp3mg")
+
+[node name="Panel" type="Panel" parent="." unique_id=1583684165]
+layout_mode = 0
+offset_right = 281.0
+offset_bottom = 289.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=395234878]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=837585668]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=2002293959]
+layout_mode = 2
+
+[node name="PlanetSystemName" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1885142367]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "System name"
+
+[node name="StationName" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1702471833]
+layout_mode = 2
+text = "Relay name"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=524944766]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=316879326]
+layout_mode = 2
+text = "Enabled"
+
+[node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1829342653]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "A"
+popup/item_0/id = 0
+popup/item_1/text = "B"
+popup/item_1/id = 1
+
+[node name="Ping" type="Button" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1010587379]
+layout_mode = 2
+size_flags_vertical = 4
+text = "PING
+"
+
+[node name="Close" type="Button" parent="Panel/MarginContainer/HBoxContainer" unique_id=1361360906]
+layout_mode = 2
+text = "Close"
+
+[connection signal="toggled" from="Panel/MarginContainer/HBoxContainer/VBoxContainer2/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="item_selected" from="Panel/MarginContainer/HBoxContainer/VBoxContainer2/OptionButton" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/VBoxContainer2/Ping" to="." method="_on_ping_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/Close" to="." method="_on_close_pressed"]

@@ -15,7 +15,7 @@ var signals: Array[BaseSignal] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	generate_planet_systems(Vector2(250, 250), 10, 50)
+	generate_planet_systems(Vector2(250, 250), 40, 50)
 	generate_enemy_probes(Vector2(5000, 5000), 2, 1000)
 	_generate_earth()
 
@@ -105,7 +105,7 @@ func generate_enemy_probes(chunk_size: Vector2, chunk_multiplier: int, padding: 
 			var random_pos: Vector2 = Vector2(random_x, random_y)
 			
 			# Create EnemyProbe
-			var enemy_probe: EnemyProbe = EnemyProbe.new()
+			var enemy_probe: EnemyProbe = EnemyProbeScene.instantiate() as EnemyProbe
 			enemy_probe.position = random_pos
 			
 			enemy_probes.append(enemy_probe)

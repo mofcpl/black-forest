@@ -28,19 +28,16 @@ func set_selected(value: bool) -> void:
 	selection.visible = value
 
 func _on_area_2d_mouse_entered() -> void:
-	print("[BasePlanetSystem] mouse_entered:", self.id, "global_mouse:", get_global_mouse_position())
 	if selected == false:
 		selection.visible = true
 		selection.modulate.a = 0.2
 
 func _on_area_2d_mouse_exited() -> void:
-	print("[BasePlanetSystem] mouse_exited:", self.id, "global_mouse:", get_global_mouse_position())
 	if selected == false:
 		selection.visible = false
 		selection.modulate.a = 1
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	print("[BasePlanetSystem] input_event:", self.id, "event:", event, "viewport_mouse:", viewport.get_mouse_position(), "global_mouse:", get_global_mouse_position())
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		selection.modulate.a = 1
 		set_selected(true)

@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bsvq7teyrj3an"]
+
+[ext_resource type="Theme" uid="uid://ir73xvl6gyso" path="res://public/new_theme.tres" id="1_nxvlk"]
+[ext_resource type="Script" uid="uid://cqw4hbdjt0611" path="res://popup-earth/popup_earth.gd" id="2_ftgfg"]
+
+[node name="PopupEarth" type="Control" unique_id=1321280207]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1280.0
+offset_bottom = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_nxvlk")
+script = ExtResource("2_ftgfg")
+
+[node name="Panel" type="Panel" parent="." unique_id=1583684165]
+layout_mode = 0
+offset_right = 276.0
+offset_bottom = 197.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=395234878]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=837585668]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=2002293959]
+layout_mode = 2
+
+[node name="PlanetSystemName" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1885142367]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 30
+text = "Earth"
+
+[node name="StationName" type="Label" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1702471833]
+layout_mode = 2
+text = "Communication Center"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer" unique_id=524944766]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Ping" type="Button" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1010587379]
+layout_mode = 2
+size_flags_vertical = 4
+text = "PING
+"
+
+[node name="Close" type="Button" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=539025517]
+layout_mode = 2
+text = "Close"
+
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/VBoxContainer2/Ping" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/HBoxContainer/VBoxContainer2/Close" to="." method="_on_close_pressed"]

@@ -1,18 +1,27 @@
 extends Node
 
 @onready var camera: Camera2D = $Camera2D
+@onready var years_past_timer: Timer = $Timer
+@onready var user_interface: UserInterface = $UserInterface
 
 @export var pan_speed: float = 600.0
 @export var mouse_pan_margin: float = 20.0
 
 var discovered_habitable_systems: int = 0
 var selected_planet_system: BasePlanetSystem = null
+var time_pased: int = 0
 
 func _ready() -> void:
 	set_process(true)
 
+func updateTime() -> void:
+	time_pased += 1
+	user_interface.update_time(time_pased)
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+
 	var dir: Vector2 = Vector2.ZERO
 
 	# Keyboard (WSAD + arrow keys)
@@ -39,11 +48,23 @@ func _process(delta: float) -> void:
 		dir.y += 1
 
 	# Apply movement
-	if dir != Vector2.ZERO:
+	if dir != Vector2.ZERO: 
 		dir = dir.normalized()
 		camera.global_position += dir * pan_speed * delta
 
 func _on_galactic_planet_system_selected(system: BasePlanetSystem) -> void:
+	if (!user_interface.popup_opened):
+		if selected_planet_system != null:
+			selected_planet_system.set_selected(false)
+		selected_planet_system = system
+		selected_planet_system.set_selected(true)
+		if system is Earth:
+			user_interface.open_popup_earth(system)
+
+func _on_timer_timeout() -> void:
+	updateTime()
+
+func _on_user_interface_close() -> void:
 	if selected_planet_system != null:
 		selected_planet_system.set_selected(false)
-	selected_planet_system = system
+		selected_planet_system = null

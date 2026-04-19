@@ -3,6 +3,7 @@ class_name EnemyProbe
 extends Node2D
 
 var target: PlanetSystem = null
+var activated: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
