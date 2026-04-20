@@ -3,16 +3,25 @@ class_name BasePlanetSystem
 extends Node2D
  
 signal clicked(system: BasePlanetSystem)
+signal radar_signal(system: BasePlanetSystem)
 
 @onready var selection: Sprite2D = $Selection
 @onready var planet_system_name: Label = $PlanetSystemName
 @onready var relay_system_name: Label = $RelayStationName
+@onready var radar_timer: Timer = $RadarTimer
 
 var id: String = ""
 var selected: bool = false
 var discovered: bool = false
+var selected_receiver: BasePlanetSystem = null
+var destroyed: bool = false
+var enabled_radar: bool = false
 
 #var station: RelayStation = null
+
+func enable_radar(enabled: bool) -> void:
+	enabled_radar = enabled
+	radar_timer.start()
 
 func _ready() -> void:
 	planet_system_name.text = self.id
@@ -46,3 +55,7 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 			selection.modulate.a = 1
 			set_selected(true)
 			emit_signal("clicked", self)
+
+
+func _on_radar_timer_timeout() -> void:
+	radar_signal.emit(self)

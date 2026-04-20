@@ -62,7 +62,7 @@ func _on_galactic_planet_system_selected(system: BasePlanetSystem) -> void:
 		if system is Earth:
 			user_interface.open_popup_earth(system)
 		else:
-			user_interface.open_popup_planet_system(system)
+			user_interface.open_popup_planet_system(system, galactic.get_nearest_planet_systems(system))
 
 func _on_timer_timeout() -> void:
 	updateTime()

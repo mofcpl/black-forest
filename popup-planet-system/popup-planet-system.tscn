@@ -57,11 +57,6 @@ text = "Enabled"
 
 [node name="OptionButton" type="OptionButton" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1829342653]
 layout_mode = 2
-item_count = 2
-popup/item_0/text = "A"
-popup/item_0/id = 0
-popup/item_1/text = "B"
-popup/item_1/id = 1
 
 [node name="Ping" type="Button" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1010587379]
 layout_mode = 2

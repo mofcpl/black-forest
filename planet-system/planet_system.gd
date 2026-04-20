@@ -5,7 +5,7 @@ extends BasePlanetSystem
 @onready var picture: Sprite2D = $Picture
 @onready var name_label: Label = $PlanetSystemName
 
-var destroyed: bool = false
+
 var known_destroyed: bool = false
 var habitable: bool = false
 

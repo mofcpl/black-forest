@@ -33,9 +33,9 @@ func open_popup_earth(earth: Earth) -> void:
 	popup.close.connect(close_popup)
 	popup_opened = true
 
-func open_popup_planet_system(system: BasePlanetSystem) -> void:
+func open_popup_planet_system(system: BasePlanetSystem, systems_in_range: Array[BasePlanetSystem]) -> void:
 	var popup: PopupPlanetSystem = PopupPlanetSystemScene.instantiate() as PopupPlanetSystem
-	popup.initialize(system)
+	popup.initialize(system, systems_in_range)
 	container.add_child(popup)
 	popup.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	popup.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -43,7 +43,7 @@ func open_popup_planet_system(system: BasePlanetSystem) -> void:
 	popup.close.connect(close_popup)
 	popup.ping.connect(on_ping_planet_system)
 	popup_opened = true
-	
+
 func close_popup() -> void:
 	if current_popup != null:
 		current_popup.queue_free()
@@ -53,6 +53,7 @@ func close_popup() -> void:
 
 func on_ping_planet_system(system: PlanetSystem) -> void:
 	ping_planet_system.emit(system)
+	close_popup()
 
 func on_ping_earth() -> void:
 	emit_signal("ping_earth")
