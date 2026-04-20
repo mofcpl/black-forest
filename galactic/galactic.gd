@@ -22,8 +22,8 @@ var earth: Earth = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	generate_planet_systems(Vector2(180, 180), 55, 40)
-	generate_enemy_probes(Vector2(1000, 1000), 10, 200)
+	generate_planet_systems(Vector2(180, 180), 50, 40)
+	generate_enemy_probes(Vector2(800, 800), 10, 200)
 	_generate_earth()
 
 func _generate_earth() -> void:

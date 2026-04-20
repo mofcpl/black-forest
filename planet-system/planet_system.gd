@@ -17,6 +17,8 @@ func initialize(id_text: String, habitable: bool) -> void:
 	self.habitable = habitable
 
 func discover() -> bool:
+	if destroyed:
+		known_destroyed_label.visible = true
 	if habitable == true:
 		habitable_label.visible = true
 	self.discovered = true;

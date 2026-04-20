@@ -10,6 +10,7 @@ signal planet_system_destroyed()
 @onready var planet_system_name: Label = $PlanetSystemName
 @onready var relay_system_name: Label = $RelayStationName
 @onready var radar_timer: Timer = $RadarTimer
+@onready var known_destroyed_label: Label = $KnowDestroyed
 
 var id: String = ""
 var selected: bool = false
@@ -22,6 +23,8 @@ var enabled_radar: bool = false
 
 func destroy() -> void:
 	destroyed = true
+	if discovered:
+		known_destroyed_label.visible = true
 	enabled_radar = false
 	radar_timer.stop()
 	planet_system_destroyed.emit()

@@ -35,6 +35,17 @@ shape = SubResource("CircleShape2D_8viq8")
 [node name="RadarTimer" type="Timer" parent="." unique_id=1466711638]
 wait_time = 3.0
 
+[node name="KnowDestroyed" type="Label" parent="." unique_id=1404758759]
+visible = false
+offset_left = 15.0
+offset_top = -22.0
+offset_right = 61.0
+offset_bottom = -8.0
+theme_override_colors/font_color = Color(1, 0, 0.20392157, 1)
+theme_override_font_sizes/font_size = 10
+text = "destroyed
+"
+
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
