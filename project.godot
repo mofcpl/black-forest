@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="Black forest"
+run/main_scene="uid://dweg5ryip3u7b"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-boot_splash/bg_color=Color(0.3741394, 0.37413922, 0.37413916, 1)
 config/icon="res://icon.svg"
 
 [autoload]
@@ -35,4 +35,4 @@ window/size/mode=2
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0.4415911, 0.4429073, 0.44650334, 1)
+environment/defaults/default_clear_color=Color(0.14412278, 0.16462126, 0.24543384, 1)

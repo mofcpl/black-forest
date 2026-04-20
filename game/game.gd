@@ -80,4 +80,9 @@ func _on_galactic_score() -> void:
 	user_interface.update_points(discovered_habitable_systems)
 
 func _on_user_interface_ping_planet_system(system: PlanetSystem) -> void:
-	galactic.create_laser_signal(Enums.LaserSignalType.COMMAND, null, system, null)
+	galactic.create_laser_signal(Enums.LaserSignalType.COMMAND, null, system, null, [])
+
+
+func _on_galactic_game_over() -> void:
+	years_past_timer.stop()
+	user_interface.open_popup_game_over(discovered_habitable_systems)

@@ -4,6 +4,7 @@ extends Node2D
  
 signal clicked(system: BasePlanetSystem)
 signal radar_signal(system: BasePlanetSystem)
+signal planet_system_destroyed()
 
 @onready var selection: Sprite2D = $Selection
 @onready var planet_system_name: Label = $PlanetSystemName
@@ -18,6 +19,12 @@ var destroyed: bool = false
 var enabled_radar: bool = false
 
 #var station: RelayStation = null
+
+func destroy() -> void:
+	destroyed = true
+	enabled_radar = false
+	radar_timer.stop()
+	planet_system_destroyed.emit()
 
 func enable_radar(enabled: bool) -> void:
 	enabled_radar = enabled

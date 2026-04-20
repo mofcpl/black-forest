@@ -17,6 +17,7 @@ var distance: float
 var progress = 0.0  # 0 → 1
 var visible: bool = true
 var laser_signal_type: Enums.LaserSignalType;
+var detected_probes: Array[EnemyProbe] = []
 
 func _process(delta):
 	if not visible:
@@ -40,26 +41,29 @@ func start() -> void:
 	if not visible:
 		line.visible = false
 	else:
+		line.visible = true
 		line.width = 2.0
 		line.default_color = Color(1, 0, 0, 1)
 		line.points = [Vector2.ZERO, Vector2.ZERO]
 
-func initialize(laser_signal_type: Enums.LaserSignalType, data: PlanetSystem, current_target: BasePlanetSystem, final_target: BasePlanetSystem, target_relative_position: Vector2, visible: bool) -> void:
+func initialize(laser_signal_type: Enums.LaserSignalType, data: PlanetSystem, current_target: BasePlanetSystem, final_target: BasePlanetSystem, target_relative_position: Vector2, detected_probes: Array[EnemyProbe], visible: bool) -> void:
 	self.laser_signal_type = laser_signal_type
 	self.data = data
 	self.current_target = current_target
 	self.final_target = final_target
 	self.visible = visible
+	self.detected_probes = detected_probes
 	self.target_relative_position = target_relative_position
 	direction = target_relative_position.normalized()
 	distance = target_relative_position.length()
 
-func set_next_target(next_target: BasePlanetSystem, target_relative_position: Vector2) -> void:
+func set_next_target(next_target: BasePlanetSystem, target_relative_position: Vector2, visible: bool) -> void:
 	current_target = next_target
 	target_relative_position = target_relative_position
 	direction = target_relative_position.normalized()
 	distance = target_relative_position.length()
 	progress = 0.0
+	self.visible = visible
 
 func on_signal_timer_timeout() -> void:
 	signal_reached_target.emit(self)

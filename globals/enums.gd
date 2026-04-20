@@ -8,5 +8,5 @@ enum State {
 enum LaserSignalType {
 	COMMAND,
 	PING,
-	RAPORT
+	RADAR
 }

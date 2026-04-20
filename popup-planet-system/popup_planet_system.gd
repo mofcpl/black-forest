@@ -10,11 +10,13 @@ signal close()
 @onready var planet_system_name_label: Label = $Panel/MarginContainer/HBoxContainer/VBoxContainer/PlanetSystemName
 #@onready var relay_system_name_label: Label = $Panel/MarginContainer/HBoxContainer/VBoxContainer/StationName
 @onready var target_menu: OptionButton = $Panel/MarginContainer/HBoxContainer/VBoxContainer2/OptionButton
+@onready var radar_enabled: CheckButton = $Panel/MarginContainer/HBoxContainer/VBoxContainer2/CheckButton
 
 var systems_in_range: Array[BasePlanetSystem] = []
 var planet_system: PlanetSystem = null
 
 func _ready() -> void:
+	radar_enabled.button_pressed = planet_system.enabled_radar
 	planet_system_name_label.text = planet_system.id
 	#relay_system_name_label.text = planet_system.station.id
 	target_menu.add_item("Auto", 0)
@@ -33,7 +35,7 @@ func _on_close_pressed() -> void:
 	close.emit()
 
 func _on_check_button_toggled(toggled_on: bool) -> void:
-	planet_system.enable_radat()
+	planet_system.enable_radar(toggled_on)
 
 func _on_option_button_item_selected(index: int) -> void:
 	planet_system.selected_receiver = systems_in_range[index - 1]

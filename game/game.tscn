@@ -18,6 +18,7 @@ metadata/_edit_use_anchors_ = true
 wait_time = 2.0
 autostart = true
 
+[connection signal="game_over" from="Galactic" to="." method="_on_galactic_game_over"]
 [connection signal="planet_system_selected" from="Galactic" to="." method="_on_galactic_planet_system_selected"]
 [connection signal="score" from="Galactic" to="." method="_on_galactic_score"]
 [connection signal="close" from="UserInterface" to="." method="_on_user_interface_close"]

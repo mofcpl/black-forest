@@ -4,6 +4,7 @@ extends Node
 
 signal planet_system_selected(system: BasePlanetSystem)
 signal score()
+signal game_over()
 
 var BasePlanetSystemScene = preload("res://base-planet-system/base_planet_system.tscn")
 var PlanetScene = preload("res://planet-system/planet_system.tscn")
@@ -21,8 +22,8 @@ var earth: Earth = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	generate_planet_systems(Vector2(200, 200), 50, 50)
-	generate_enemy_probes(Vector2(500, 500), 20, 1000)
+	generate_planet_systems(Vector2(180, 180), 55, 40)
+	generate_enemy_probes(Vector2(1000, 1000), 10, 200)
 	_generate_earth()
 
 func _generate_earth() -> void:
@@ -35,11 +36,15 @@ func _generate_earth() -> void:
 	add_child(earth)
 	earth.connect("clicked", _on_planet_system_select)
 	self.earth = earth
+	earth.planet_system_destroyed.connect(on_earth_destroyed)
 
-func create_laser_signal(type: Enums.LaserSignalType, emiter: BasePlanetSystem, target: BasePlanetSystem, data: BasePlanetSystem) -> void:
+func on_earth_destroyed() -> void:
+	game_over.emit()
+
+func create_laser_signal(type: Enums.LaserSignalType, emiter: BasePlanetSystem, target: BasePlanetSystem, data: BasePlanetSystem, detected_probes: Array[EnemyProbe]) -> void:
 	var laser_signal: LaserSignal = LaserSignalScene.instantiate() as LaserSignal
 	match type:
-		Enums.LaserSignalType.PING:
+		Enums.LaserSignalType.PING, Enums.LaserSignalType.RADAR:
 			var next: BasePlanetSystem = null
 			if emiter.selected_receiver != null:
 				next = emiter.selected_receiver
@@ -50,14 +55,14 @@ func create_laser_signal(type: Enums.LaserSignalType, emiter: BasePlanetSystem, 
 				laser_signal.queue_free()
 				return
 			# HACK koniec
-			laser_signal.initialize(type, data, next, target,  next.position - emiter.position, true)
+			laser_signal.initialize(type, data, next, target,  next.position - emiter.position, detected_probes, emiter.discovered)
 			laser_signal.position = emiter.position
 		Enums.LaserSignalType.COMMAND:
 			var next = get_next_towards(earth, target, Constants.SIGNAL_RANGE)
 			if next == null:
 				laser_signal.queue_free()
 				return
-			laser_signal.initialize(type, null, next, target, next.position - earth.position, true)
+			laser_signal.initialize(type, null, next, target, next.position - earth.position, [], true)
 			laser_signal.position = earth.position
 	add_child(laser_signal)
 	laser_signal.start()
@@ -65,12 +70,15 @@ func create_laser_signal(type: Enums.LaserSignalType, emiter: BasePlanetSystem, 
 
 func on_laser_signal_received(laser_signal: LaserSignal) -> void:
 	match laser_signal.laser_signal_type:
-		Enums.LaserSignalType.PING:
+		Enums.LaserSignalType.PING, Enums.LaserSignalType.RADAR:
 			if laser_signal.current_target is Earth:
-				laser_signal.data.discover()
-				laser_signal.data.enable_radar(true)
-				if laser_signal.data.habitable:
-					score.emit()
+				if laser_signal.data:
+					laser_signal.data.discover()
+					laser_signal.data.enable_radar(true)
+					if laser_signal.data.habitable:
+						score.emit()
+				for probe in laser_signal.detected_probes:
+					probe.detect()
 				laser_signal.queue_free()
 			else:
 				var next: BasePlanetSystem = null
@@ -82,7 +90,7 @@ func on_laser_signal_received(laser_signal: LaserSignal) -> void:
 					laser_signal.queue_free()
 					return
 				laser_signal.position = laser_signal.current_target.position
-				laser_signal.set_next_target(next, next.position - laser_signal.current_target.position)
+				laser_signal.set_next_target(next, next.position - laser_signal.current_target.position, laser_signal.current_target.discovered)
 				laser_signal.start()
 		Enums.LaserSignalType.COMMAND:
 			if laser_signal.current_target == laser_signal.final_target and laser_signal.current_target.destroyed == false:
@@ -96,14 +104,14 @@ func on_laser_signal_received(laser_signal: LaserSignal) -> void:
 					return
 				# koniec hacka
 				laser_signal.position = laser_signal.current_target.position
-				laser_signal.set_next_target(next, next.position - laser_signal.current_target.position)
-				laser_signal.start()
+				laser_signal.set_next_target(next, next.position - laser_signal.current_target.position, laser_signal.current_target.discovered)
+				laser_signal.start()		
 
 func get_nearest_planet_systems(planet_system: BasePlanetSystem) -> Array[BasePlanetSystem]:
 	var receivers: Array[BasePlanetSystem] = []
 
 	for system in planet_systems:
-		if system != planet_system and system != Earth:
+		if system != planet_system and system != Earth and system.discovered:
 			var distance: float = planet_system.position.distance_to(system.position)
 			if distance <= Constants.SIGNAL_RANGE:
 				receivers.append(system)
@@ -136,16 +144,16 @@ func create_radio_signal(source: BasePlanetSystem) -> void:
 	radio_signal.connect("signal_reached_probe",on_radio_signal_received_probe)
 
 func on_radio_signal_received_probe(emiter: BasePlanetSystem, probe: EnemyProbe) -> void:
-	probe.activate(emiter)
+	probe.activate(emiter, earth)
 	probe.no_target.connect(on_probe_no_target)
 
 func on_probe_no_target(probe: EnemyProbe) -> void:
 	probe.target = find_nearest_undestroyed_planet_system(probe.position)
-	probe.activate(probe.target)
+	probe.activate(probe.target, earth)
 
 func find_nearest_undestroyed_planet_system(position: Vector2) -> BasePlanetSystem:
-	var best: BasePlanetSystem = null
-	var best_dist: float = INF
+	var best: BasePlanetSystem = earth
+	var best_dist: float = position.distance_to(earth.position)
 
 	for system in planet_systems:
 		if system.destroyed:
@@ -158,7 +166,7 @@ func find_nearest_undestroyed_planet_system(position: Vector2) -> BasePlanetSyst
 	return best
 
 func on_radio_signal_received(emiter: BasePlanetSystem, target: BasePlanetSystem) -> void:
-	create_laser_signal(Enums.LaserSignalType.PING, target, earth, target)
+	create_laser_signal(Enums.LaserSignalType.PING, target, earth, target, [])
 
 func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding: float) -> void:
 	# Calculate the bounds based on multiplier
@@ -209,9 +217,12 @@ func generate_planet_systems(chunk_size: Vector2, chunk_multiplier: int, padding
 			planet_system.connect("radar_signal", _on_radar_signal)
 
 func _on_radar_signal(planet_system: BasePlanetSystem) -> void:
+	var detected_probes: Array[EnemyProbe] = []
 	for probe in enemy_probes:
 		if probe.position.distance_to(planet_system.position) <= Constants.RADAR_RANGE:
-			probe.detect()
+			detected_probes.append(probe)
+	if detected_probes.size() > 0:
+		create_laser_signal(Enums.LaserSignalType.RADAR, planet_system, earth, null, detected_probes)
 
 func generate_enemy_probes(chunk_size: Vector2, chunk_multiplier: int, padding: float) -> void:
 	# Calculate the bounds based on multiplier

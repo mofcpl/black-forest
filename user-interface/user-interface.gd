@@ -8,6 +8,7 @@ signal close()
 
 var PopupEarthScene = preload("res://popup-earth/popup-earth.tscn")
 var PopupPlanetSystemScene = preload("res://popup-planet-system/popup-planet-system.tscn")
+var PopupGameOverScene = preload("res://popup_game_over/popup_game_over.tscn")
 
 @onready var time: Label = $MarginContainer/Time
 @onready var points: Label = $MarginContainer/Points
@@ -21,6 +22,15 @@ func update_time(time: int) -> void:
 
 func update_points(points: int) -> void:
 	self.points.text = "Points: " + str(points)
+
+func open_popup_game_over(points: int) -> void:
+	var popup: PopupGameOver = PopupGameOverScene.instantiate() as PopupGameOver
+	popup.initialize(points)
+	container.add_child(popup)
+	popup.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	popup.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	current_popup = popup
+	popup_opened = true
 
 func open_popup_earth(earth: Earth) -> void:
 	var popup: PopupEarth = PopupEarthScene.instantiate() as PopupEarth

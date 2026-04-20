@@ -7,9 +7,11 @@
 script = ExtResource("1_wr4hj")
 
 [node name="Picture" type="Sprite2D" parent="." unique_id=1891602257]
+visible = false
 texture = ExtResource("2_rydtg")
 
 [node name="Label" type="Label" parent="." unique_id=1716368621]
+visible = false
 offset_left = -51.0
 offset_top = 5.0
 offset_right = 52.0

@@ -11,6 +11,7 @@ var target: BasePlanetSystem = null
 var activated: bool = false
 var direction: Vector2 = Vector2.ZERO
 var known_relative_position: Vector2 = Vector2.ZERO
+var earth: Earth = null
 
 
 func _ready() -> void:
@@ -18,12 +19,15 @@ func _ready() -> void:
 
 func detect() -> void:
 	picture.position = Vector2.ZERO
+	picture.visible = true
 	label.position = Vector2.ZERO
+	label.visible = true
 	known_relative_position = Vector2.ZERO
 
 
-func activate(target: BasePlanetSystem) -> void:
+func activate(target: BasePlanetSystem, earth: Earth) -> void:
 	self.target = target
+	self.earth = earth
 	activated = true
 	direction = (target.position - position).normalized()
 
@@ -37,13 +41,13 @@ func _process(delta: float) -> void:
 
 		# kompensacja ruchu sprite'a
 		var movement = position - old_position
-		#picture.position -= movement
-		#label.position -= movement
+		if position.distance_to(earth.position) > Constants.RADAR_RANGE:
+			picture.position -= movement
+			label.position -= movement
 
 		# dotarcie do celu
 		if position.distance_to(target.position) < 10:
-			target.destroyed = true
-
+			target.destroy()
 			if target.selected_receiver != null:
 				self.target = target.selected_receiver
 				direction = (target.position - position).normalized()

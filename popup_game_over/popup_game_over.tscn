@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://ctwcyn3uexexu"]
+
+[ext_resource type="Theme" uid="uid://ir73xvl6gyso" path="res://public/new_theme.tres" id="1_npkhl"]
+[ext_resource type="Script" uid="uid://bg4b24rkhltxy" path="res://popup_game_over/popup_game_over.gd" id="2_jeq2t"]
+
+[node name="PopupGameOver" type="Control" unique_id=1160725998]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_npkhl")
+script = ExtResource("2_jeq2t")
+
+[node name="Panel" type="Panel" parent="." unique_id=1155896771]
+layout_mode = 0
+offset_right = 805.0
+offset_bottom = 334.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1630317444]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=1413673507]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=29782572]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Game over"
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=593083412]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Discovered habitable planetary systems: 
+5"
+horizontal_alignment = 1
