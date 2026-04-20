@@ -27,8 +27,6 @@ func open_popup_game_over(points: int) -> void:
 	var popup: PopupGameOver = PopupGameOverScene.instantiate() as PopupGameOver
 	popup.initialize(points)
 	container.add_child(popup)
-	popup.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	popup.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	current_popup = popup
 	popup_opened = true
 
