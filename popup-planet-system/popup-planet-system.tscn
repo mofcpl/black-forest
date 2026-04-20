@@ -52,6 +52,7 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=316879326]
+visible = false
 layout_mode = 2
 text = "Enabled"
 
