@@ -10,3 +10,12 @@ script = ExtResource("2_cou2y")
 [node name="Picture" type="Sprite2D" parent="." index="4" unique_id=1560681321]
 visible = false
 texture = ExtResource("1_s2l8h")
+
+[node name="Habitable" type="Label" parent="." index="6" unique_id=1234894560]
+visible = false
+offset_left = 15.0
+offset_top = -8.0
+offset_right = 61.0
+offset_bottom = 6.0
+theme_override_font_sizes/font_size = 10
+text = "habitable"

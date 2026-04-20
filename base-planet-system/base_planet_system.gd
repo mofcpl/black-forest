@@ -65,4 +65,5 @@ func _on_area_2d_input_event(_viewport: Node, event: InputEvent, _shape_idx: int
 
 
 func _on_radar_timer_timeout() -> void:
-	radar_signal.emit(self)
+	if discovered == true:
+		radar_signal.emit(self)
