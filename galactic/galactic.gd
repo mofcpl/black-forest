@@ -73,10 +73,10 @@ func on_laser_signal_received(laser_signal: LaserSignal) -> void:
 		Enums.LaserSignalType.PING, Enums.LaserSignalType.RADAR:
 			if laser_signal.current_target is Earth:
 				if laser_signal.data:
-					laser_signal.data.discover()
 					laser_signal.data.enable_radar(true)
-					if laser_signal.data.habitable:
+					if laser_signal.data.habitable and laser_signal.data.discovered == false:
 						score.emit()
+					laser_signal.data.discover()
 				for probe in laser_signal.detected_probes:
 					probe.detect()
 				laser_signal.queue_free()
